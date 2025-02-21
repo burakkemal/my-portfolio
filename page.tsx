@@ -4,9 +4,13 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Sun, Moon, Github, Linkedin, Mail, Globe } from "lucide-react"
+import { Sun, Moon, Github, Linkedin, Mail, Globe, Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import guncelResim from "@/assets/images/guncelResim.jpg";
+
+type Language = 'en' | 'tr';
+type NavSection = 'home' | 'skills' | 'experience' | 'contact';
 
 const technologies = [
   // Architecture (moved up)
@@ -58,8 +62,7 @@ const experiences = [
         "Development with Java 8, 11, and 17 versions",
         "Application development with Spring Framework",
         "Use of Redis, RabbitMQ, and Docker technologies",
-        "Database migration management with Flyway",
-        "Frontend development with Thymeleaf",
+        "Database migration management with Flyway"
       ],
       tr: [
         "Mikroservis mimarisi ile yeni projelerin geliştirilmesi",
@@ -106,7 +109,19 @@ const experiences = [
 
 const projects = []
 
-const translations = {
+const translations: Record<Language, {
+  home: string;
+  skills: string;
+  experience: string;
+  contact: string;
+  greeting: string;
+  title: string;
+  description: string;
+  contactButton: string;
+  skillsTitle: string;
+  experienceTitle: string;
+  contactTitle: string;
+}> = {
   en: {
     home: "Home",
     skills: "Skills",
@@ -139,11 +154,19 @@ const translations = {
 
 export default function Portfolio() {
   const [theme, setTheme] = useState("dark")
-  const [activeSection, setActiveSection] = useState("home")
-  const [language, setLanguage] = useState("en")
+  const [activeSection, setActiveSection] = useState<NavSection>('home')
+  const [language, setLanguage] = useState<Language>('en')
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
     document.body.className = theme
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+      document.body.style.backgroundColor = '#111827' // bg-gray-900
+    } else {
+      document.documentElement.classList.remove('dark')
+      document.body.style.backgroundColor = '#ffffff'
+    }
   }, [theme])
 
   const toggleTheme = () => {
@@ -154,11 +177,17 @@ export default function Portfolio() {
     setLanguage(language === "tr" ? "en" : "tr")
   }
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
   const t = translations[language]
 
   return (
     <div
-      className={`min-h-screen flex flex-col ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"} transition-colors duration-300`}
+      className={`min-h-screen flex flex-col ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      } transition-colors duration-300 min-w-full`}
     >
       <header className="fixed w-full backdrop-blur-md bg-white/30 dark:bg-gray-900/30 z-50">
         <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -170,14 +199,16 @@ export default function Portfolio() {
           >
             Burak Kemal Koyuncu
           </motion.h1>
-          <div className="flex items-center space-x-4">
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" size="icon" onClick={toggleTheme}>
               {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </Button>
             <Button variant="ghost" size="icon" onClick={toggleLanguage}>
               <Globe className="h-5 w-5" />
             </Button>
-            {["home", "skills", "experience", "contact"].map((section) => (
+            {(['home', 'skills', 'experience', 'contact'] as const).map((section) => (
               <Button
                 key={section}
                 variant="ghost"
@@ -188,7 +219,49 @@ export default function Portfolio() {
               </Button>
             ))}
           </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center space-x-2">
+            <Button variant="ghost" size="icon" onClick={toggleTheme}>
+              {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            </Button>
+            <Button variant="ghost" size="icon" onClick={toggleMenu}>
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
         </nav>
+
+        {/* Mobile Navigation */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-white/95 dark:bg-gray-900/95 border-t dark:border-gray-800"
+            >
+              <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <Button variant="ghost" size="sm" onClick={toggleLanguage} className="justify-start">
+                  <Globe className="h-5 w-5 mr-2" />
+                  {language === "en" ? "English" : "Türkçe"}
+                </Button>
+                {(['home', 'skills', 'experience', 'contact'] as const).map((section) => (
+                  <Button
+                    key={section}
+                    variant="ghost"
+                    onClick={() => {
+                      setActiveSection(section)
+                      setIsMenuOpen(false)
+                    }}
+                    className={`justify-start ${activeSection === section ? "text-primary" : ""}`}
+                  >
+                    {t[section]}
+                  </Button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       <main className="pt-20 flex-grow">
@@ -207,10 +280,10 @@ export default function Portfolio() {
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="text-left"
+                  className="text-left order-2 md:order-1"
                 >
-                  <h2 className="text-5xl font-bold mb-4">{t.greeting}</h2>
-                  <p className="text-2xl mb-6">{t.title}</p>
+                  <h2 className="text-3xl md:text-5xl font-bold mb-4">{t.greeting}</h2>
+                  <p className="text-xl md:text-2xl mb-6">{t.title}</p>
                   <p className="max-w-xl mb-8">{t.description}</p>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button onClick={() => setActiveSection("contact")} size="lg">
@@ -222,15 +295,15 @@ export default function Portfolio() {
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
-                  className="relative"
+                  className="relative order-1 md:order-2"
                 >
-                  <div className="relative w-[400px] h-[400px] mx-auto">
+                  <div className="relative w-[250px] h-[250px] md:w-[400px] md:h-[400px] mx-auto">
                     <Image
-                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/guncelResim.jpg-IniRrqje1qUAlKrefIAIm7FHjodKwJ.jpeg"
+                      src={guncelResim}
                       alt="Burak Kemal Koyuncu"
                       fill
                       className="object-cover rounded-full border-4 border-white dark:border-gray-800 shadow-2xl"
-                      sizes="(max-width: 768px) 100vw, 400px"
+                      sizes="(max-width: 768px) 250px, 400px"
                       priority
                       quality={100}
                     />
