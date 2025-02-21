@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   images: {
-    domains: ['your-domain.com'], // Eğer harici bir URL kullanıyorsanız
+    unoptimized: true,
   },
 }
 
-module.exports = nextConfig 
+module.exports = nextConfig
