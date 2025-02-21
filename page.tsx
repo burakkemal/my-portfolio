@@ -306,10 +306,6 @@ export default function Portfolio() {
                       sizes="(max-width: 768px) 250px, 400px"
                       priority
                       quality={100}
-                      style={{
-                        objectFit: 'cover',
-                        borderRadius: '50%'
-                      }}
                     />
                     <div className="absolute inset-0 rounded-full shadow-inner pointer-events-none" />
                   </div>
@@ -398,11 +394,7 @@ export default function Portfolio() {
                             alt={exp.company}
                             width={48}
                             height={48}
-                            className="rounded-lg object-contain"
-                            style={{
-                              maxWidth: '100%',
-                              height: 'auto'
-                            }}
+                            className="rounded-lg"
                           />
                         </div>
                         <div>
