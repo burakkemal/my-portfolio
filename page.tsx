@@ -8,6 +8,7 @@ import { Sun, Moon, Github, Linkedin, Mail, Globe, Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import guncelResim from "@/assets/images/guncelResim.jpg";
+import defaultLogo from "@/assets/images/default-logo.png"
 
 type Language = 'en' | 'tr';
 type NavSection = 'home' | 'skills' | 'experience' | 'contact';
@@ -50,7 +51,7 @@ const technologies = [
 const experiences = [
   {
     company: "SNI",
-    logo: "/placeholder.svg?height=80&width=80",
+    logo: defaultLogo,
     position: { en: "Experienced Software Developer", tr: "Deneyimli Yazılım Geliştirici" },
     period: { en: "January 2023 - Present", tr: "Ocak 2023 - Devam Ediyor" },
     location: { en: "Antalya, Turkey", tr: "Antalya, Türkiye" },
@@ -78,7 +79,7 @@ const experiences = [
   },
   {
     company: "Etiya",
-    logo: "/placeholder.svg?height=80&width=80",
+    logo: defaultLogo,
     position: { en: "Software Development Specialist", tr: "Yazılım Geliştirme Uzmanı" },
     period: { en: "November 2021 - November 2023", tr: "Kasım 2021 - Kasım 2023" },
     location: { en: "Ankara, Turkey", tr: "Ankara, Türkiye" },
@@ -390,7 +391,7 @@ export default function Portfolio() {
                       <div className="flex items-start gap-4 mb-4">
                         <div className="w-16 h-16 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
                           <Image
-                            src={exp.logo || "/placeholder.svg"}
+                            src={exp.logo || defaultLogo}
                             alt={exp.company}
                             width={48}
                             height={48}
