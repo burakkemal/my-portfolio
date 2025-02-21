@@ -35,7 +35,6 @@ const technologies = [
   // Frontend
   { name: { en: "React", tr: "React" }, color: "bg-blue-400", category: "Frontend" },
   { name: { en: "Angular", tr: "Angular" }, color: "bg-red-500", category: "Frontend" },
-  { name: { en: "Thymeleaf", tr: "Thymeleaf" }, color: "bg-green-600", category: "Frontend" },
 
   // Message Broker
   { name: { en: "RabbitMQ", tr: "RabbitMQ" }, color: "bg-orange-500", category: "Message Broker" },
@@ -307,6 +306,10 @@ export default function Portfolio() {
                       sizes="(max-width: 768px) 250px, 400px"
                       priority
                       quality={100}
+                      style={{
+                        objectFit: 'cover',
+                        borderRadius: '50%'
+                      }}
                     />
                     <div className="absolute inset-0 rounded-full shadow-inner pointer-events-none" />
                   </div>
@@ -395,7 +398,11 @@ export default function Portfolio() {
                             alt={exp.company}
                             width={48}
                             height={48}
-                            className="rounded-lg"
+                            className="rounded-lg object-contain"
+                            style={{
+                              maxWidth: '100%',
+                              height: 'auto'
+                            }}
                           />
                         </div>
                         <div>
