@@ -152,6 +152,7 @@ const translations: Record<Language, {
   },
 }
 
+
 export default function Portfolio() {
   const [theme, setTheme] = useState("dark")
   const [activeSection, setActiveSection] = useState<NavSection>('home')
