@@ -71,8 +71,7 @@ const experiences = [
         "Java 8, 11 ve 17 versiyonları ile geliştirme",
         "Spring Framework ile uygulama geliştirme",
         "Redis, RabbitMQ ve Docker teknolojilerinin kullanımı",
-        "Flyway ile veritabanı migrasyon yönetimi",
-        "Thymeleaf ile frontend geliştirme",
+        "Flyway ile veritabanı migrasyon yönetimi"
       ],
     },
   },
