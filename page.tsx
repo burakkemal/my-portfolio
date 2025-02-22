@@ -92,6 +92,7 @@ const experiences = [
         "PostgreSQL database management",
         "Project tracking with JIRA",
         "XML - JSON conversions and XSLT transformations",
+        "Experienced in designing and implementing business process automation using Camunda BPM, including workflow orchestration and process optimization."
       ],
       tr: [
         "Ooredoo, Dhiraagu ve Bouygues Telecom için CRM projeleri geliştirme",
@@ -101,7 +102,7 @@ const experiences = [
         "Java, WSO2 API Manager, WSO2 Enterprise Integrator teknolojileri kullanımı",
         "PostgreSQL veritabanı yönetimi",
         "JIRA ile proje takibi",
-        "XML - JSON dönüşümleri ve XSLT transformasyonları",
+        "İş akışı orkestrasyonu ve süreç optimizasyonu dahil olmak üzere Camunda BPM kullanarak iş süreci otomasyonunu tasarlama ve uygulama konusunda deneyimli."
       ],
     },
   },
